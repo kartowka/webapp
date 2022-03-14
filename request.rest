@@ -3,4 +3,14 @@ GET http://localhost:3000/
 ###
 GET http://localhost:3000/post
 ###
+GET http://localhost:3000/post/62260eb0f4f97ffc743c3b71
+###
+GET http://localhost:3000/post?sender=Anthony
+###
 POST http://localhost:3000/post
+Content-Type: application/json
+
+{
+    "message":"this is my new message1",
+    "sender":"Fleysher"
+}
