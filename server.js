@@ -8,10 +8,6 @@ const app = express()
 import dotenv from 'dotenv'
 dotenv.config()
 
-//* db
-
-import connectDB from './db/connect.js'
-
 //* routers
 
 import postRouter from './routes/post.js'
@@ -31,6 +27,10 @@ app.get('/', (req, res) => {
 app.use('/post', postRouter)
 app.use(not_found_middleware)
 
+//* db
+
+import connectDB from './db/connect.js'
+
 //* server create
 
 const PORT = process.env.PORT || 3000
@@ -46,3 +46,5 @@ const start = async () => {
 }
 
 start()
+
+export default app
