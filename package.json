@@ -6,7 +6,13 @@
   "type": "module",
   "scripts": {
     "server": "nodemon server --ignore client",
-    "dev": "npm run server"
+    "dev": "npm run server",
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --detectOpenHandles --forceExit"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "webapp/client"
+    ]
   },
   "author": "Anthony F. && Sharon Y.",
   "license": "MIT",
@@ -18,6 +24,8 @@
     "mongoose": "^6.2.3"
   },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "supertest": "^6.2.2"
   }
 }
