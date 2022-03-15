@@ -2,11 +2,12 @@ import app from '../server.js'
 import request from 'supertest'
 import mongoose from 'mongoose'
 import { StatusCodes } from 'http-status-codes'
-import Post from '../models/Post.js'
 
+//* params
 const postMessage = 'this is my test post'
 const sender = 'Fleysher'
 var senderID = ''
+//* end params
 
 beforeAll(() => {})
 afterAll(async () => {
