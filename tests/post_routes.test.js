@@ -37,4 +37,10 @@ describe('Testing Post API', () => {
 		expect(response.body.sender).toEqual(sender)
 		expect(response.body._id).toEqual(senderID)
 	})
+	test('test function deletePostByID', async () => {
+		const response = await request(app).delete('/post/' + senderID)
+		expect(response.statusCode).toEqual(StatusCodes.OK)
+		const userExistAfterDelete = await request(app).get('/post/' + senderID)
+		await expect(userExistAfterDelete.statusCode).toEqual(StatusCodes.BAD_REQUEST)
+	})
 })
