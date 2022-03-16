@@ -13,7 +13,7 @@ beforeAll(() => {})
 afterAll(async () => {
 	mongoose.connection.close()
 })
-describe('Testing Post API', () => {
+describe('POST API TEST', () => {
 	test('function createPost', async () => {
 		const response = await request(app).post('/post').send({ message: postMessage, sender: sender })
 		expect(response.statusCode).toEqual(StatusCodes.OK)
