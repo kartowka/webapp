@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 
-const errorHandlerMiddleware = (err, req, res, next) => {
+const error_handler_middleware = (err, req, res, next) => {
 	console.log(err.message)
 	const defaultError = {
 		statusCodes: err.StatusCode || StatusCodes.INTERNAL_SERVER_ERROR,
@@ -20,4 +20,4 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 	res.status(defaultError.statusCodes).json({ msg: defaultError.msg })
 }
 
-export default errorHandlerMiddleware
+export default error_handler_middleware
