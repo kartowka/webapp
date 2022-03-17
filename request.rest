@@ -3,9 +3,9 @@ GET http://localhost:3000/
 ###
 GET http://localhost:3000/post
 ###
-GET http://localhost:3000/post/62260eb0f4f97ffc743c3b71
+GET http://localhost:3000/post/623328df259021aed6a4aafb
 ###
-GET http://localhost:3000/post?sender=Anthony
+GET http://localhost:3000/post?sender=Fleysher
 ###
 POST http://localhost:3000/post
 Content-Type: application/json
