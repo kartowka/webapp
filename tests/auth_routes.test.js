@@ -1,4 +1,4 @@
-import app from '../app.js'
+import app from '../dist/app.js'
 import request from 'supertest'
 import mongoose from 'mongoose'
 import { StatusCodes } from 'http-status-codes'

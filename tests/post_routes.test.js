@@ -1,4 +1,4 @@
-import app from '../app.js'
+import app from '../dist/app.js'
 import request from 'supertest'
 import mongoose from 'mongoose'
 import { StatusCodes } from 'http-status-codes'
@@ -40,6 +40,6 @@ describe('POST API TEST', () => {
 		const response = await request(app).delete('/post/' + senderID)
 		expect(response.statusCode).toEqual(StatusCodes.OK)
 		const userExistAfterDelete = await request(app).get('/post/' + senderID)
-		await expect(userExistAfterDelete.statusCode).toEqual(StatusCodes.BAD_REQUEST)
+		expect(userExistAfterDelete.statusCode).toEqual(StatusCodes.BAD_REQUEST)
 	})
 })
