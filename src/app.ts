@@ -24,7 +24,7 @@ import bodyParser from 'body-parser'
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
 app.use(bodyParser.json())
 app.get('/', (req, res) => {
-	res.json({ msg: 'Welcome!' })
+  res.json({ msg: 'Welcome!' })
 })
 app.use('/', authRouter)
 app.use('/post', postRouter)
