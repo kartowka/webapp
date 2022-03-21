@@ -1,7 +1,8 @@
-import Post from '../models/Post.js'
-import { StatusCodes } from 'http-status-codes'
-import BadRequestError from '../errors/bad-request.js'
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
+
+import BadRequestError from '../errors/bad-request'
+import Post from '../models/Post'
 
 const getPostById = async (req: Request, res: Response) => {
   const post = await Post.findById(req.params.id)

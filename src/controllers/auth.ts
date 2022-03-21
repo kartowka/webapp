@@ -1,7 +1,8 @@
-import User from '../models/User.js'
-import { StatusCodes } from 'http-status-codes'
-import { BadRequestError, UnAuthenticatedError } from '../errors/index.js'
 import { Request, Response } from 'express'
+import { StatusCodes } from 'http-status-codes'
+
+import { BadRequestError, UnAuthenticatedError } from '../errors/index'
+import User from '../models/User'
 
 const register = async (req: Request, res: Response) => {
   const { name, email, password } = req.body

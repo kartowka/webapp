@@ -1,6 +1,6 @@
 import express from 'express'
 const router = express.Router()
-import { register, login, deleteByID } from '../controllers/auth.js'
+import { deleteByID, login, register } from '../controllers/auth'
 
 router.route('/register').post(register)
 router.route('/login').post(login)
