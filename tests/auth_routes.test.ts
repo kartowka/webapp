@@ -1,7 +1,8 @@
-import app from '../src/app'
-import request from 'supertest'
-import mongoose from 'mongoose'
 import { StatusCodes } from 'http-status-codes'
+import mongoose from 'mongoose'
+import request from 'supertest'
+
+import app from '../src/app'
 
 //* params
 const name = 'Anthony'
