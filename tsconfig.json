@@ -2,18 +2,28 @@
   "compilerOptions": {
     "module": "es2020",
     "esModuleInterop": true,
-    "target": "es2022",
+    "target": "ES2022",
     "noImplicitAny": true,
-    "types": ["node", "jest"],
+    "types": [
+      "node",
+      "jest"
+    ],
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
-      "*": ["node_modules/*"]
+      "*": [
+        "node_modules/*"
+      ]
     }
   },
-  "include": ["src/**/*"],
-  "exclude": ["coverage", "**/tests"]
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "coverage",
+    "**/tests"
+  ]
 }
