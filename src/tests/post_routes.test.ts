@@ -2,7 +2,7 @@ import { StatusCodes } from 'http-status-codes'
 import mongoose from 'mongoose'
 import request from 'supertest'
 
-import app from '../src/app'
+import app from '../app'
 
 //* params
 const postMessage = 'this is my test post'
