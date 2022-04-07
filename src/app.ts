@@ -24,8 +24,8 @@ app.use(bodyParser.json())
 app.get('/', (req, res) => {
   res.json({ msg: 'Welcome!' })
 })
-app.use('/', authRouter)
-app.use('/post', postRouter)
+app.use('/api/auth', authRouter)
+app.use('/api/post', postRouter)
 app.use(not_found_middleware)
 app.use(error_handler_middleware)
 
