@@ -63,6 +63,13 @@ describe('AUTH API TEST', () => {
     ID = res.body.user._id
     expect(res.statusCode).toEqual(StatusCodes.OK)
   })
+  it('function logout', function (done) {
+    request(app)
+      .delete('/api/auth/logout')
+      .set('Content-type', 'application/json')
+      .send({ id: ID })
+      .expect(StatusCodes.OK, done)
+  })
   test('function deleteByID', async () => {
     const res = await request(app).delete('/api/auth/user/' + ID)
     expect(res.statusCode).toEqual(StatusCodes.OK)
