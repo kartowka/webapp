@@ -4,13 +4,6 @@ import mongoose from 'mongoose'
 import validator from 'validator'
 
 const UserSchema = new mongoose.Schema({
-  name: {
-    type: 'String',
-    required: [true, 'please provide name'],
-    minlength: 3,
-    maxlength: 20,
-    trim: true,
-  },
   email: {
     type: 'String',
     required: [true, 'please provide email'],
@@ -26,32 +19,20 @@ const UserSchema = new mongoose.Schema({
     minlength: 6,
     select: false,
   },
-  lastName: {
+  refreshToken: {
     type: 'String',
-    trim: true,
-    maxlength: 20,
-    default: 'lastName',
-  },
-  location: {
-    type: 'String',
-    trim: true,
-    maxlength: 20,
-    default: 'my city',
   },
 })
 
-UserSchema.pre('save', async function () {
-  const salt = await bcrypt.genSalt(10)
-  this.password = await bcrypt.hash(this.password, salt)
-})
 UserSchema.methods.createJWT = function () {
   return jwt.sign({ userId: this._id }, process.env.JWT_SECRET, {
     expiresIn: process.env.JWT_LIFETIME,
   })
 }
-UserSchema.methods.comparePassword = async function (
-  candidatePassword: string
-) {
+UserSchema.methods.createRefreshToken = function () {
+  this.refreshToken = jwt.sign({ userId: this._id }, process.env.JWT_REFRESH_TOKEN, {})
+}
+UserSchema.methods.comparePassword = async function (candidatePassword: string) {
   const isMatch = await bcrypt.compare(candidatePassword, this.password)
   return isMatch
 }
