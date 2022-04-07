@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs'
 import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
@@ -5,26 +6,30 @@ import { BadRequestError, UnAuthenticatedError } from '../errors/index'
 import User from '../models/User'
 
 const register = async (req: Request, res: Response) => {
-  const { name, email, password } = req.body
-  if (!name || !email || !password) {
+  const { email, password } = req.body
+  if (!email || !password) {
     throw new BadRequestError('please provide all values')
   }
   const userAlreadyExists = await User.findOne({ email })
   if (userAlreadyExists) {
     throw new BadRequestError('email already in use')
   }
-  const user = await User.create({ name, email, password })
+  const encryptedPassword = await encryptPassword(password)
+  const user = await User.create({ email, password: encryptedPassword })
   const token = user.createJWT()
+  user.createRefreshToken()
+  await user.save()
   res.status(StatusCodes.CREATED).json({
     user: {
       email: user.email,
-      lastName: user.lastName,
-      location: user.location,
-      name: user.name,
+      refresh_token: user.refreshToken,
     },
     token,
-    location: user.location,
   })
+}
+const encryptPassword = async function (password: string) {
+  const salt = await bcrypt.genSalt(10)
+  return await bcrypt.hash(password, salt)
 }
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body
@@ -40,11 +45,20 @@ const login = async (req: Request, res: Response) => {
     throw new UnAuthenticatedError('Invalid Credentials')
   }
   const token = user.createJWT()
+  user.createRefreshToken()
+  await user.save()
   user.password = undefined
-  res.status(StatusCodes.OK).json({ user, token, location: user.location })
+  res.status(StatusCodes.OK).json({ user, token })
 }
-const updateUser = (req: Request, res: Response) => {
-  res.send('update user')
+const renewToken = async (req: Request, res: Response) => {
+  const refreshToken = req.body.token
+  if (refreshToken == null) throw new UnAuthenticatedError('unauthorize')
+}
+const logout = async (req: Request, res: Response) => {
+  const user = await User.findById(req.body.id)
+  user.refreshToken = ' '
+  await user.save()
+  res.status(StatusCodes.OK).json('you have been logout.')
 }
 const deleteByID = async (req: Request, res: Response) => {
   const { id } = req.params
@@ -52,9 +66,7 @@ const deleteByID = async (req: Request, res: Response) => {
   if (!user) {
     throw new BadRequestError('User not exist')
   }
-  res
-    .status(StatusCodes.OK)
-    .json({ msg: 'user with requested ID has been deleted.' })
+  res.status(StatusCodes.OK).json({ msg: 'user with requested ID has been deleted.' })
 }
 
-export { register, login, updateUser, deleteByID }
+export { register, login, deleteByID, renewToken, logout }
