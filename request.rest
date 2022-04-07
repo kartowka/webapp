@@ -1,16 +1,45 @@
 ###
-GET http://localhost:3000/
+POST http://localhost:3000/api/auth/register
 ###
-GET http://localhost:3000/post
+GET http://localhost:3000/api/post
 ###
-GET http://localhost:3000/post/623328df259021aed6a4aafb
+GET http://localhost:3000/api/post/624e96d6bc26c2f225112a90
 ###
-GET http://localhost:3000/post?sender=Fleysher
+GET http://localhost:3000/api/post?sender=Fleysher
 ###
-POST http://localhost:3000/post
+POST http://localhost:3000/api/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjRlOTY4N2JlOTMyYTBlNjI1NjZjNGQiLCJpYXQiOjE2NDkzMTc1NzgsImV4cCI6MTY0OTMxNzYwOH0.tPh7HmJD_PPGIflRRYeXlP-FMCTFnUYpmTP0csy8UKE
 Content-Type: application/json
 
 {
     "message":"this is my new message1",
     "sender":"Fleysher"
+}
+
+### 
+POST http://localhost:3000/api/auth/register
+Content-Type: application/json
+
+{
+    "email": "t@t.com",
+    "password":"123456"
+}
+
+###
+
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "t@t.com",
+    "password":"123456"
+}
+
+###
+
+DELETE http://localhost:3000/api/auth/logout
+Content-Type: application/json
+
+{
+    "id": "624c25917557e2acdbbf8b92"
 }
