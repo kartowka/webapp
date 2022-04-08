@@ -10,7 +10,7 @@ const swaggerConnection = (env: string, port: string) => {
           version: '1.0.0',
           description: 'A simple Express Library API',
         },
-        servers: [{ url: 'http://localhost:' + process.env.PORT }],
+        servers: [{ url: 'http://localhost:' + port }],
       },
       apis: ['./src/routes/*.ts'],
     }
