@@ -1,6 +1,7 @@
 import express from 'express'
 const router = express.Router()
 import { deleteByID, login, logout, register } from '../controllers/auth'
+
 /**
  * @swagger
  * tags:
@@ -28,22 +29,61 @@ import { deleteByID, login, logout, register } from '../controllers/auth'
  *         - email
  *         - password
  *       properties:
+ *         id:
+ *           type: string
+ *           description: auto-generated User id
  *         email:
  *           type: string
- *           description: The user email
+ *           description: User email address, unique
  *         password:
  *           type: string
- *           description: The user password
+ *           description: hashed User password
+ *         refreshToken:
+ *           type: string
+ *           description: auto-generated User refreshToken
  *       example:
  *         email: 'bob@gmail.com'
  *         password: '123456'
  */
-
+router.route('/register').post(register)
 /**
  * @swagger
  * /api/auth/register:
  *   post:
- *     summary: registers a new user
+ *     summary: register a new user
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       201:
+ *         description: Register succeed with statusCode(CREATED), return email,accessToken,refreshToken
+ *         content:
+ *           application/json:
+ *             schema:
+ *               token:
+ *                 type: string
+ *                 description: auto-generated accessToken
+ *               refreshToken:
+ *                 type: string
+ *                 description: auto-generated refreshToken
+ *               email:
+ *                 type: string
+ *                 description: user`s email address
+ *             example:
+ *               email: 'bob@gmail.com'
+ *               refreshToken: 'long long auto-generated string'
+ *               token: 'long long auto-generated string'
+ */
+router.route('/login').post(login)
+/**
+ * @swagger
+ * /api/auth/login:
+ *   post:
+ *     summary: login a existing User
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -53,28 +93,101 @@ import { deleteByID, login, logout, register } from '../controllers/auth'
  *             $ref: '#/components/schemas/User'
  *     responses:
  *       200:
- *         description: Register success retuns access and refresh tokens
+ *         description: login succeed with statusCode(OK), return email,refreshToken,accessToken
  *         content:
  *           application/json:
  *             schema:
- *               access_token:
- *                 type: string
- *                 description: The refresh Token
- *               refresh_token:
- *                 type: string
- *                 description: The refresh Token
  *               _id:
  *                 type: string
- *                 description: The user id
+ *                 description: auto-generated id
+ *               token:
+ *                 type: string
+ *                 description: auto-generated accessToken
+ *               refreshToken:
+ *                 type: string
+ *                 description: auto-generated refreshToken
+ *               email:
+ *                 type: string
+ *                 description: user`s email address
  *             example:
- *               access_token: 'bob@gmail.com'
- *               refresh_token: '123456'
- *               _id: "adfasdfasdfasdfsd"
- *
+ *               _id: 'auto-generated user id'
+ *               email: 'bob@gmail.com'
+ *               refreshToken: 'long long auto-generated string'
+ *               token: 'long long auto-generated string'
  */
-router.route('/register').post(register)
-router.route('/login').post(login)
 router.route('/user/:id').delete(deleteByID)
+/**
+ * @swagger
+ * /api/auth/user/id:
+ *   delete:
+ *     summary: login a existing User
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: login succeed with statusCode(OK), return email,refreshToken,accessToken
+ *         content:
+ *           application/json:
+ *             schema:
+ *               _id:
+ *                 type: string
+ *                 description: auto-generated id
+ *               token:
+ *                 type: string
+ *                 description: auto-generated accessToken
+ *               refreshToken:
+ *                 type: string
+ *                 description: auto-generated refreshToken
+ *               email:
+ *                 type: string
+ *                 description: user`s email address
+ *             example:
+ *               _id: 'auto-generated user id'
+ *               email: 'bob@gmail.com'
+ *               refreshToken: 'long long auto-generated string'
+ *               token: 'long long auto-generated string'
+ */
 router.route('/logout').delete(logout)
+/**
+ * @swagger
+ * /api/auth/logout:
+ *   delete:
+ *     summary: logout
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       200:
+ *         description: logout
+ *         content:
+ *           application/json:
+ *             schema:
+ *               _id:
+ *                 type: string
+ *                 description: auto-generated id
+ *               token:
+ *                 type: string
+ *                 description: auto-generated accessToken
+ *               refreshToken:
+ *                 type: string
+ *                 description: auto-generated refreshToken
+ *               email:
+ *                 type: string
+ *                 description: user`s email address
+ *             example:
+ *               _id: 'auto-generated user id'
+ *               email: 'bob@gmail.com'
+ *               refreshToken: 'long long auto-generated string'
+ *               token: 'long long auto-generated string'
+ */
 
 export default router
