@@ -22,7 +22,7 @@ const register = async (req: Request, res: Response) => {
   res.status(StatusCodes.CREATED).json({
     user: {
       email: user.email,
-      refresh_token: user.refreshToken,
+      refreshToken: user.refreshToken,
     },
     token,
   })
