@@ -14,11 +14,8 @@ import bodyParser from 'body-parser'
 import swaggerUI from 'swagger-ui-express'
 
 import swaggerConnection from './documentation/swagger'
-app.use(
-  '/api-docs',
-  swaggerUI.serve,
-  swaggerUI.setup(swaggerConnection(process.env.NODE_ENV, process.env.PORT))
-)
+const swaggerConfig = swaggerConnection(process.env.NODE_ENV, process.env.PORT)
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerConfig))
 
 // * middleware
 import error_handler_middleware from './middleware/error-handler'
