@@ -18,12 +18,17 @@ import renewAuthenticationMiddleware from '../middleware/renew-authentication'
  *       type: http
  *       scheme: bearer
  *       bearerFormat: JWT
- */
-
-/**
- * @swagger
- * components:
  *   schemas:
+ *     refreshToken:
+ *       type: object
+ *       required:
+ *         - refreshToken
+ *       properties:
+ *         refreshToken:
+ *           type: string
+ *           description: auto-generated refreshToken on login response
+ *       example:
+ *         Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjRmZTNlNTYyYjcwY2I2NTk2NmE1NzMiLCJpYXQiOjE2NDk1MzM3MDZ9.yvflmtMR35rsVwtjPvKH1ftK1hWarxPXdPtCcyTAOfQ
  *     User:
  *       type: object
  *       required:
@@ -121,7 +126,7 @@ router.route('/user/:id').delete(deleteByID)
  * @swagger
  * /api/auth/user/id:
  *   delete:
- *     summary: login a existing User
+ *     summary: TODO
  *     tags: [Auth]
  *     requestBody:
  *       required: true
@@ -191,5 +196,37 @@ router.route('/logout').delete(logout)
  *               token: 'long long auto-generated string'
  */
 router.route('/token').post(renewAuthenticationMiddleware, renewToken)
+/**
+ * @swagger
+ * /api/auth/token:
+ *   post:
+ *     summary: renewToken
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: token renew using refreshToken
+ *         content:
+ *           application/json:
+ *             schema:
+ *               _id:
+ *                 type: string
+ *                 description: auto-generated id
+ *               token:
+ *                 type: string
+ *                 description: auto-generated accessToken
+ *               refreshToken:
+ *                 type: string
+ *                 description: auto-generated refreshToken
+ *               email:
+ *                 type: string
+ *                 description: user`s email address
+ *             example:
+ *               _id: 'auto-generated user id'
+ *               email: 'bob@gmail.com'
+ *               refreshToken: 'long long auto-generated string'
+ *               token: 'long long auto-generated string'
+ */
 
 export default router
