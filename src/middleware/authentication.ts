@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from 'express'
-import { StatusCodes } from 'http-status-codes'
 import jwt from 'jsonwebtoken'
 
 import { ForbiddenError, UnAuthenticatedError } from '../errors/index'
