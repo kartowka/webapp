@@ -19,7 +19,7 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerConfig))
 
 // * middleware
 import error_handler_middleware from './middleware/error-handler'
-import not_found_middleware from './middleware/not_found'
+import not_found_middleware from './middleware/not-found'
 // * routers
 import authRouter from './routes/auth'
 import postRouter from './routes/post'
