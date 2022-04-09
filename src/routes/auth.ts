@@ -1,6 +1,7 @@
 import express from 'express'
 const router = express.Router()
-import { deleteByID, login, logout, register } from '../controllers/auth'
+import { deleteByID, login, logout, register, renewToken } from '../controllers/auth'
+import renewAuthenticationMiddleware from '../middleware/renew-authentication'
 
 /**
  * @swagger
@@ -189,5 +190,6 @@ router.route('/logout').delete(logout)
  *               refreshToken: 'long long auto-generated string'
  *               token: 'long long auto-generated string'
  */
+router.route('/token').post(renewAuthenticationMiddleware, renewToken)
 
 export default router
