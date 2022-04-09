@@ -7,7 +7,7 @@ const start = async () => {
     // console.log('connected to mongoDB')
     app.listen(PORT, () =>
       // tslint:disable-next-line:no-console
-      console.log(`server is listening on port ${PORT}`)
+      console.log(`server is listening on port ${PORT} || http://localhost:${PORT}`)
     )
   } catch (error) {
     // tslint:disable-next-line:no-console
