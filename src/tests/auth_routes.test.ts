@@ -10,6 +10,7 @@ const wrongEmail = 'qantonfley@gmail.com'
 const password = 'qwerty123'
 const wrongPassword = 'qwerty1231'
 let ID = ''
+let refreshToken = ''
 //* end params
 
 afterAll(async () => {
@@ -61,9 +62,16 @@ describe('AUTH API TEST', () => {
       .post('/api/auth/login')
       .send({ email: email, password: password })
     ID = res.body.user._id
+    refreshToken = res.body.user.refreshToken
     expect(res.statusCode).toEqual(StatusCodes.OK)
   })
-  it('function logout', function (done) {
+  it('function renewToken', done => {
+    request(app)
+      .post('/api/auth/token')
+      .set({ Authorization: 'Bearer ' + refreshToken })
+      .expect(StatusCodes.OK, done)
+  })
+  it('function logout', done => {
     request(app)
       .delete('/api/auth/logout')
       .set('Content-type', 'application/json')
