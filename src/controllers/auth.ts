@@ -51,8 +51,10 @@ const login = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({ user, token })
 }
 const renewToken = async (req: Request, res: Response) => {
-  const refreshToken = req.body.token
-  if (refreshToken == null) throw new UnAuthenticatedError('unauthorize')
+  const user = await User.findById(req.body.user.userId)
+  const token = user.createJWT()
+  await user.save()
+  res.status(StatusCodes.OK).json({ user, token })
 }
 const logout = async (req: Request, res: Response) => {
   const user = await User.findById(req.body.id)
