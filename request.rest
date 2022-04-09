@@ -1,7 +1,6 @@
 ###
 POST http://localhost:3000/api/auth/register
-###
-GET http://localhost:3000/api/post
+
 ###
 GET http://localhost:3000/api/post/624e96d6bc26c2f225112a90
 ###
@@ -43,3 +42,11 @@ Content-Type: application/json
 {
     "id": "624c25917557e2acdbbf8b92"
 }
+
+###
+GET http://localhost:3000/api/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjRlOTY4N2JlOTMyYTBlNjI1NjZjNGQiLCJpYXQiOjE2NDk1Mjk1MzQsImV4cCI6MTY0OTUyOTU2NH0.OO8esiWAWj53tCR20CSCvOv5aI8gE6QovIdyGI6YSVE
+
+###
+POST http://localhost:3000/api/auth/token
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjRlOTY4N2JlOTMyYTBlNjI1NjZjNGQiLCJpYXQiOjE2NDk1Mjk2NDF9.ksoLEKtg5ClV5uKrojWiUhxVJPrQV1T5CIvBs0bkzUQ
