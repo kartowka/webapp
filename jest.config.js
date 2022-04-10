@@ -21,6 +21,7 @@ export default {
 
   // Indicates whether the coverage information should be collected while executing the test
   collectCoverage: true,
+  collectCoverageFrom: ['src/**/*.ts', '!src/documentation/*.ts', '!src/server.ts'],
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
   // collectCoverageFrom: undefined,
@@ -159,10 +160,8 @@ export default {
   // testPathIgnorePatterns: [
   //   "/node_modules/"
   // ],
-
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],
-
   // This option allows the use of a custom results processor
   // testResultsProcessor: undefined,
 
