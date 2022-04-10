@@ -71,6 +71,12 @@ describe('AUTH API TEST', () => {
       .set({ Authorization: 'Bearer ' + refreshToken })
       .expect(StatusCodes.OK, done)
   })
+  it('function renewToken !valid', done => {
+    request(app)
+      .post('/api/auth/token')
+      .set({ Authorization: 'Bearer ' + refreshToken + '1' })
+      .expect(StatusCodes.FORBIDDEN, done)
+  })
   it('function logout', done => {
     request(app)
       .delete('/api/auth/logout')
