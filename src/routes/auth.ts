@@ -19,16 +19,6 @@ import renewAuthenticationMiddleware from '../middleware/renew-authentication'
  *       scheme: bearer
  *       bearerFormat: JWT
  *   schemas:
- *     refreshToken:
- *       type: object
- *       required:
- *         - refreshToken
- *       properties:
- *         refreshToken:
- *           type: string
- *           description: auto-generated refreshToken on login response
- *       example:
- *         Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MjRmZTNlNTYyYjcwY2I2NTk2NmE1NzMiLCJpYXQiOjE2NDk1MzM3MDZ9.yvflmtMR35rsVwtjPvKH1ftK1hWarxPXdPtCcyTAOfQ
  *     User:
  *       type: object
  *       required:
@@ -204,6 +194,13 @@ router.route('/token').post(renewAuthenticationMiddleware, renewToken)
  *     tags: [Auth]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: header
+ *         name: refreshToken
+ *         schema:
+ *           type: string
+ *           required: true
+ *         description: auto-generated refreshToken on login path
  *     responses:
  *       200:
  *         description: token renew using refreshToken
