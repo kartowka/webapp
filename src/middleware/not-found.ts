@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
-import { StatusCodes } from 'http-status-codes'
+
+import NotFoundError from '../errors/not-found'
 
 const notFoundMiddleware = (req: Request, res: Response) => {
-  res.status(StatusCodes.NOT_FOUND).send('routes does not found')
+  throw new NotFoundError('page not found')
 }
 export default notFoundMiddleware
