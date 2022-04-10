@@ -1,13 +1,13 @@
 import mongoose from 'mongoose'
 
+import logger from '../utils/logger'
+
 const connectDB = async (url: string) => {
   try {
     await mongoose.connect(url)
-    // tslint:disable-next-line:no-console
-    console.log('connected to DB')
+    logger.info(`🚀 connected to mongoDB 🚀`)
   } catch (e) {
-    // tslint:disable-next-line:no-console
-    console.log(e)
+    logger.warn(e)
   }
 }
 export default connectDB
