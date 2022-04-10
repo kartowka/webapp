@@ -1,17 +1,16 @@
 import app from './app'
+import logger from './utils/logger'
+
 const PORT = process.env.PORT || 3000
 
 const start = async () => {
   try {
-    // await connectDB(process.env.MONGO_URL)
-    // console.log('connected to mongoDB')
-    app.listen(PORT, () =>
-      // tslint:disable-next-line:no-console
-      console.log(`server is listening on port ${PORT} || http://localhost:${PORT}`)
-    )
+    app.listen(PORT, function () {
+      logger.info(`🚀 server in listening on port ${PORT} 🚀 `)
+      logger.info(`🚀 http://localhost:${PORT} `)
+    })
   } catch (error) {
-    // tslint:disable-next-line:no-console
-    console.log(error)
+    logger.fatal('error')
   }
 }
 
