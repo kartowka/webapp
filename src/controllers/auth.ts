@@ -57,7 +57,7 @@ const renewToken = async (req: Request, res: Response) => {
   res.status(StatusCodes.OK).json({ user, token })
 }
 const logout = async (req: Request, res: Response) => {
-  const user = await User.findById(req.body.id)
+  const user = await User.findById(req.body.user.userId)
   user.refreshToken = ' '
   await user.save()
   res.status(StatusCodes.OK).json('you have been logout.')
