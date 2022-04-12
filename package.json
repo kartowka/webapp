@@ -8,7 +8,7 @@
     "lint": "eslint --ignore-path .eslintignore . --ext .ts,.js .",
     "dev": "npm run build && nodemon --ignore client",
     "dev:server": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/server.ts",
-    "test": "jest --detectOpenHandles --forceExit --silent --coverage",
+    "test": "jest --silent --coverage",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "build": "(rm -rf dist || npx rimraf dist) && tsc && npm run fix_imports",
     "fix_imports": "node buildtools/fix-imports.js"
@@ -16,6 +16,9 @@
   "author": "Anthony F. && Sharon Y.",
   "license": "MIT",
   "dependencies": {
+    "@socket.io/redis-adapter": "^7.1.0",
+    "@socket.io/redis-emitter": "^4.1.1",
+    "@types/redis": "^4.0.11",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.2",
     "dotenv": "^16.0.0",
@@ -25,6 +28,9 @@
     "mongoose": "^6.2.3",
     "pino": "^7.10.0",
     "pino-pretty": "^7.6.1",
+    "redis": "^4.0.6",
+    "socket.io": "^4.4.1",
+    "socket.io-client": "^4.4.1",
     "ts-node-dev": "^1.1.8",
     "validator": "^13.7.0"
   },
