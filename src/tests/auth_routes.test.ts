@@ -80,8 +80,7 @@ describe('AUTH API TEST', () => {
   it('function logout', done => {
     request(app)
       .delete('/api/auth/logout')
-      .set('Content-type', 'application/json')
-      .send({ id: ID })
+      .set({ Authorization: 'Bearer ' + refreshToken })
       .expect(StatusCodes.OK, done)
   })
   test('function deleteByID', async () => {
