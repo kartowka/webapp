@@ -1,7 +1,7 @@
 import http from 'http'
 
 import app from './app'
-import socketServer from './socket_server'
+import { socketServer } from './socket-server'
 import logger from './utils/logger'
 
 const PORT = process.env.PORT || 3000
