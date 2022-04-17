@@ -1,25 +1,31 @@
 import { createAdapter } from '@socket.io/redis-adapter'
-import http from 'http'
 import { createClient } from 'redis'
-import { Server } from 'socket.io'
+import { Server, Socket } from 'socket.io'
 
-import eventListenerMiddleware from './events/event-listener'
+import { onEventHandler } from './events/event-listener'
 import socketAuthenticationMiddleware from './middleware/socket-authentication'
+import { serverInstance, serverStart } from './server'
+
 const pubClient = createClient({ url: process.env.REDIS_URL })
 const subClient = pubClient.duplicate()
-
+const createSocketServer = () => {
+  const socketServer: Server = new Server(serverStart(), { cors: { origin: '*' } })
+  redisClientConnect()
+  socketServer.adapter(createAdapter(pubClient, subClient))
+  socketServer.use(socketAuthenticationMiddleware)
+  socketServer.on('connection', (socket: Socket) => {
+    onEventHandler(socketServer, socket)
+  })
+  return socketServer
+}
+const destroySocketServer = async (io: Server) => {
+  await Promise.all([redisClientDisconnect(), io.close(), serverInstance.close()])
+}
 const redisClientDisconnect = async () => {
-  await pubClient.disconnect()
-  await subClient.disconnect()
+  await Promise.all([subClient.disconnect(), pubClient.disconnect()])
 }
-const socketServer = async (server: http.Server) => {
-  const io = new Server(server)
-  await pubClient.connect()
-  await subClient.connect()
-  io.adapter(createAdapter(pubClient, subClient))
-  io.use(socketAuthenticationMiddleware)
-  eventListenerMiddleware(io)
-  return io
+const redisClientConnect = async () => {
+  await Promise.all([subClient.connect(), pubClient.connect()])
 }
 
-export { socketServer, redisClientDisconnect }
+export { createSocketServer, destroySocketServer, redisClientConnect, redisClientDisconnect }
