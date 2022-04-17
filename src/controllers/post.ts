@@ -29,7 +29,7 @@ const createNewPost = async (req: Request, res: Response) => {
     sender: req.body.sender,
   })
   const newPost = await post.save()
-  res.status(StatusCodes.OK).json(post)
+  res.status(StatusCodes.OK).json(newPost)
 }
 const deletePostByID = async (req: Request, res: Response) => {
   const postToDelete = await Post.deleteOne({ id: req.params.id })
