@@ -5,7 +5,7 @@ const registerEchoHandler = (io: Server, socket: Socket) => {
     socket.emit('common:echo', payload)
   }
 
-  socket.on('common:echo', echoHandler)
+  socket.once('common:echo', echoHandler)
 }
 
 export default registerEchoHandler
