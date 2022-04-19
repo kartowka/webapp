@@ -1,10 +1,5 @@
 # MERN Application
 
-<style>
-r { color: Red }
-o { color: Orange }
-g { color: Green }
-</style>
 <p align="center">
     <img src="https://img.shields.io/badge/MongoDB-4EA94B??style=plastic&logo=mongodb&logoColor=white">
     <img src="https://img.shields.io/badge/Express.js-404D59=?style=plastic">
