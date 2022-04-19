@@ -1,5 +1,10 @@
 # MERN Application
 
+<style>
+r { color: Red }
+o { color: Orange }
+g { color: Green }
+</style>
 <p align="center">
     <img src="https://img.shields.io/badge/MongoDB-4EA94B??style=plastic&logo=mongodb&logoColor=white">
     <img src="https://img.shields.io/badge/Express.js-404D59=?style=plastic">
@@ -29,14 +34,23 @@ $ cd webapp
 # Install dependencies
 $ npm install
 
+# Run linter
+$ npm run lint
+
 # Compile the code using typescript compiler
 $ npm run build
+
+# Run prettier
+$ npm run format
 
 # Run the app
 $ npm run dev
 
-#run the tests
-$ npm run test
+# Run Auth,Post API tests
+$ npm run test:API
+
+#run socket.io tests
+$ npm run test:socket
 ```
 
 ## Deployment
@@ -44,6 +58,14 @@ $ npm run test
 Additional notes on how to deploy this on a live or release system. Explaining the most important branches, what pipelines they trigger and how to update the database (if anything special).
 
 ## Additional Documentation and Acknowledgments
+
+```bash
+# if you want your code compiled to esm like es2022 module
+# run this command it will create,compile,lint,format
+# fix imports for extension like .js in the end
+# outDir=out folder
+$ outDir=esm npm run build:esm
+```
 
 - Project folder on server:
 - Confluence link:
