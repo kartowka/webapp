@@ -1,7 +1,11 @@
-import path from 'path'
-import fs from 'fs'
-
-const START_PATH = path.join(process.cwd(), 'dist')
+const path = require('path')
+const fs = require('fs')
+if (process.argv.length === 2) {
+  console.error('argument outDir must be presented.')
+  process.exit(1)
+}
+const outDir = `./${process.argv[2]}`
+const START_PATH = path.join(process.cwd(), outDir)
 const IMPORT_REGEXP = /^((import|export) [^';]* from '(\.\/|(\.\.\/)+)[^';]*)'/g
 const JUST_ADD_AN_EXTENSION = "$1.js'"
 const ADD_INDEX_FILE = "$1/index.js'"
