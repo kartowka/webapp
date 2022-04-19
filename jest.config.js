@@ -2,11 +2,12 @@
  * For a detailed explanation regarding each configuration property, visit:
  * https://jestjs.io/docs/configuration
  */
+/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
 
-export default {
+module.exports = {
   preset: 'ts-jest',
   testMatch: ['**/tests/**/*.ts'],
-  testTimeout: 10000,
+  //testTimeout: 10000,
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -41,7 +42,7 @@ export default {
 
   // Indicates which provider should be used to instrument code for coverage
   coverageProvider: 'v8',
-  resolver: 'jest-ts-webcompat-resolver',
+  //resolver: 'jest-ts-webcompat-resolver',
 
   // A list of reporter names that Jest uses when writing coverage reports
   // coverageReporters: [
