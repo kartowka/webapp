@@ -2,17 +2,16 @@
   "name": "mern_app",
   "version": "1.0.0",
   "description": "mern app",
-  "main": "dist/server.js",
-  "type": "module",
+  "main": "index.js",
   "scripts": {
+    "start": "npm run build && node dist/run_server.js",
+    "dev": "nodemon src/run_server.ts",
+    "build": "(rm -rf dist || npx rimraf dist) && tsc -p .",
     "lint": "eslint --ignore-path .eslintignore . --ext .ts,.js .",
-    "dev": "npm run build && nodemon --ignore client",
-    "dev:server": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/run_server.ts",
     "test:API": "jest --silent --coverage --detectOpenHandles -- src/tests/API",
     "test:socket": "jest -- src/tests/socket.test.ts --detectOpenHandles",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
-    "build": "(rm -rf dist || npx rimraf dist) && tsc && npm run fix_imports",
-    "fix_imports": "node buildtools/fix-imports.js"
+    "build:esm": "(rm -rf $outDir || npx rimraf $outDir) && tsc -m es2022 --outDir ./$outDir && eslint ./$outDir --fix && prettier -w ./$outDir --loglevel silent && node buildtools/fix-imports.js $outDir"
   },
   "author": "Anthony F. && Sharon Y.",
   "license": "MIT",
