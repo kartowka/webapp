@@ -1,3 +1,3 @@
 import { createSocketServer } from './socket-server'
 
-createSocketServer()
+export const io = createSocketServer()
