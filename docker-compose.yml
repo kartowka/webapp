@@ -2,6 +2,7 @@ version: '3.9'
 services:
   app:
     container_name: docker-node-mongo
+    hostname: webapp
     restart: always
     build: .
     ports:
@@ -19,3 +20,12 @@ services:
     image: redis:alpine
     ports:
       - '6379:6379'
+  nginx:
+    container_name: nginx
+    build:
+      context: nginx
+    hostname: nginx
+    ports:
+      - '80:80'
+    depends_on:
+      - app
