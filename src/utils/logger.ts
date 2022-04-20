@@ -3,7 +3,7 @@ import pretty from 'pino-pretty'
 
 const logger = pino(
   pretty({
-    destination: 'src/utils/serverlog.log',
+    destination: 1, //'src/utils/serverlog.log',
     translateTime: 'SYS:dd-mm-yyyy HH:MM:ss',
     sync: true,
     ignore: 'pid,hostname',
