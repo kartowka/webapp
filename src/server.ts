@@ -5,8 +5,7 @@ import logger from './utils/logger'
 
 let serverInstance: http.Server
 
-const serverStart = () => {
-  const PORT: number = Number(process.env.PORT) || 3000
+const serverStart = (PORT = Number(process.env.PORT)) => {
   serverInstance = http.createServer(app)
   serverInstance.listen(PORT, () => {
     logger.info(`🚀 server in up and running on PORT ${PORT} 🚀 `)
