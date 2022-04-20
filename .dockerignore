@@ -1,2 +1,14 @@
 node_modules
 npm-debug.log
+.eslint*
+.prettier*
+.git*
+dump*
+jest*
+request.rest
+share.txt
+lectures
+coverage
+dist
+.vscode
+.DS_Store
