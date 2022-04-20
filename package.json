@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run build && node dist/run_server.js",
+    "API": "npm run build && node dist/run_API.js",
     "dev": "nodemon src/run_server.ts",
     "build": "(rm -rf dist || npx rimraf dist) && tsc -p .",
     "lint": "eslint --ignore-path .eslintignore . --ext .ts,.js .",
