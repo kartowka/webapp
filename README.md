@@ -15,7 +15,7 @@ Overview will be provided later...
 
 ## Requirements
 
-Have npm & node.js installed.
+Have npm & node.js & installed.
 
 ## Getting Started
 
@@ -60,6 +60,19 @@ Additional notes on how to deploy this on a live or release system. Explaining t
 # fix imports for extension like .js in the end
 # outDir=out folder
 $ outDir=esm npm run build:esm
+```
+
+```bash
+# to run this you should install docker on your machine
+# run the docker containers {node.js,mongo} on seperate containers
+# with communication between them, also log presented.
+$ docker-compose up
+# run the docker containers {node.js,mongo} on seperate containers
+# with communication on without log.
+$ docker-compose up -d
+# stop the service
+$ docker-compose down
+
 ```
 
 - Project folder on server:
