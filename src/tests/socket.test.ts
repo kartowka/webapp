@@ -1,7 +1,7 @@
 import { StatusCodes } from 'http-status-codes'
 import mongoose from 'mongoose'
 import { Server } from 'socket.io'
-import { io as socketClient, Socket } from 'socket.io-client'
+import Client, { io as socketClient, Socket } from 'socket.io-client'
 import request from 'supertest'
 
 import Post from '../models/Post'
@@ -43,13 +43,13 @@ beforeAll(async () => {
   socketServer = createSocketServer()
 })
 afterAll(async () => {
-  users[0].clientSocket.close()
-  users[1].clientSocket.close()
   await Promise.all([
     User.deleteMany({ email: { $regex: '@socket.io' } }),
     Post.deleteMany({ sender: { $regex: '@socket.io' } }),
   ])
   destroySocketServer(socketServer)
+  users[0].clientSocket.close()
+  users[1].clientSocket.close()
   mongoose.connection.close()
 })
 describe('Auth API TEST', () => {
@@ -77,10 +77,11 @@ describe('Auth API TEST', () => {
 describe('Socket.IO TEST', () => {
   const createClientSocket = (user: socketUserModel) => {
     return new Promise<void>(resolve => {
-      user.clientSocket = socketClient(`ws://localhost:${process.env.PORT}`, {
+      user.clientSocket = Client(`http://localhost:${process.env.PORT}`, {
         transports: ['websocket'],
-        reconnectionDelay: 0,
-        reconnectionDelayMax: 0,
+        reconnection: true,
+        reconnectionDelay: 500,
+        reconnectionAttempts: 10,
         forceNew: true,
         auth: {
           token: `bearer ${user.accessToken}`,
@@ -106,29 +107,47 @@ describe('Socket.IO TEST', () => {
     await Promise.all([disconnectClientSocket(users[0]), disconnectClientSocket(users[1])])
   })
   it('should test echo event', done => {
-    users[0].clientSocket.emit('common:echo', 'echo message')
-    users[0].clientSocket.once('common:echo', (arg: string) => {
+    users[0].clientSocket.on('common:echo', (arg: string) => {
       expect(arg).toBe('echo message')
       done()
     })
+    users[0].clientSocket.emit('common:echo', 'echo message')
   })
   it('should test ims', done => {
     const msg = { body: 'this is a test message', receiver: users[1].clientSocket.id }
-    users[0].clientSocket.emit('ims:instantMsg', msg)
-    users[1].clientSocket.once('ims:instantMsg', (rcMsg: InstantMessage) => {
+    users[1].clientSocket.on('ims:instantMsg', (rcMsg: InstantMessage) => {
       expect(rcMsg.body).toBe(msg.body)
       expect(rcMsg.sender).toBe(users[0].clientSocket.id)
       expect(rcMsg.receiver).toBe(users[1].clientSocket.id)
       done()
     })
+    users[0].clientSocket.emit('ims:instantMsg', msg)
   })
+  // const createPostMessageFromAPI = async (message: string, sender: string, accessToken: string) => {
+  //   return new Promise(resolve => {
+  //     setTimeout(
+  //       resolve(
+  //         request(serverInstance)
+  //           .post('/api/post')
+  //           .set({ Authorization: 'Bearer ' + accessToken })
+  //           .send({ message: message, sender: sender })
+  //       ),
+  //       100
+  //     )
+  //   })
+  // }
 
-  //TODO opon user post message broadcast to room all and get the message
+  // //TODO on user post message broadcast to room all and get the message
   it('should test broadcasting message', done => {
-    users[0].clientSocket.emit('post:new', 'msg.message')
     users[1].clientSocket.on('post:new', (receivedMessage: string) => {
+      console.log(receivedMessage)
       expect(receivedMessage).toBe('msg.message')
       done()
     })
+
+    users[0].clientSocket.emit('post:new', 'msg.message')
   })
 })
+// expect.assertions(1)
+// const msg = { body: 'broadcast message', id: users[0]._id, accessToken: users[0].accessToken }
+// const response = createPostMessageFromAPI(msg.body, msg.id, msg.accessToken)
