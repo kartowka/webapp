@@ -8,7 +8,7 @@ const socketAuthenticationMiddleware = (socket: Socket, next: NextFunction) => {
   const authHeaders = socket.handshake.auth.token
   const token = authHeaders && authHeaders.split(' ')[1]
   if (token == null) throw new UnAuthenticatedError('unauthorize')
-  jwt.verify(token, process.env.JWT_SECRET, (err: any, user: { userId: string }) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err: unknown, user: { userId: string }) => {
     if (err) throw new ForbiddenError('forbidden')
     socket.data.user = user.userId
     next()
