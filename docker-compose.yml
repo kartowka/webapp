@@ -4,28 +4,30 @@ services:
     container_name: docker-node-mongo
     hostname: webapp
     restart: always
-    build: .
+    build:
+      context: .
     ports:
       - '3000:3000'
     links:
       - mongo
       - redis
+      - nginx
   mongo:
     container_name: mongo
-    image: mongo:latest
+    build:
+      context: utils/mongoDB
     ports:
       - '27017:27017'
   redis:
     container_name: redis
-    image: redis:alpine
+    build:
+      context: utils/redis
     ports:
       - '6379:6379'
   nginx:
     container_name: nginx
     build:
-      context: nginx
+      context: utils/nginx
     hostname: nginx
     ports:
       - '80:80'
-    depends_on:
-      - app
