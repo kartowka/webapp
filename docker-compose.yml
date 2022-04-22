@@ -1,7 +1,7 @@
 version: '3.9'
 services:
   app:
-    container_name: docker-node-mongo
+    container_name: express
     hostname: webapp
     restart: always
     build:
@@ -12,18 +12,24 @@ services:
       - mongo
       - redis
       - nginx
+    networks:
+      - webapp-network
   mongo:
     container_name: mongo
     build:
       context: utils/mongoDB
     ports:
       - '27017:27017'
+    networks:
+      - webapp-network
   redis:
     container_name: redis
     build:
       context: utils/redis
     ports:
       - '6379:6379'
+    networks:
+      - webapp-network
   nginx:
     container_name: nginx
     build:
@@ -31,3 +37,8 @@ services:
     hostname: nginx
     ports:
       - '80:80'
+    networks:
+      - webapp-network
+networks:
+  webapp-network:
+    external: true
