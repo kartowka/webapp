@@ -1,5 +1,6 @@
 // * application
 
+import cors from 'cors'
 import express from 'express'
 const app = express()
 
@@ -24,6 +25,7 @@ import not_found_middleware from './middleware/not-found'
 import authRouter from './routes/auth'
 import postRouter from './routes/post'
 // * app.use
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: true, limit: '1mb' }))
 app.use(bodyParser.json())
 app.get('/', (req, res) => {
