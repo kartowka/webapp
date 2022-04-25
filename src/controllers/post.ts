@@ -2,7 +2,9 @@ import { Request, Response } from 'express'
 import { StatusCodes } from 'http-status-codes'
 
 import BadRequestError from '../errors/bad-request'
+import broadcastPostMessageHandler from '../events/broadcast-handler'
 import Post from '../models/Post'
+import { socketServer } from '../socket-server'
 
 const getPostById = async (req: Request, res: Response) => {
   const post = await Post.findById(req.params.id)
@@ -29,6 +31,9 @@ const createNewPost = async (req: Request, res: Response) => {
     sender: req.body.sender,
   })
   const newPost = await post.save()
+  if (socketServer != undefined) {
+    broadcastPostMessageHandler(socketServer, newPost.message)
+  }
   res.status(StatusCodes.OK).json(newPost)
 }
 const deletePostByID = async (req: Request, res: Response) => {
