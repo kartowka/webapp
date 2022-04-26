@@ -25,6 +25,15 @@ jobs:
             type=semver,pattern={{major}}
           flavor: |
             latest=auto
+          docker_build_args: |
+            JWT_SECRET_ARG
+            JWT_REFRESH_TOKEN_ARG
+            JWT_LIFETIME_ARG
+        env:
+          JWT_SECRET_ARG: ${{env.JWT_SECRET}}
+          JWT_REFRESH_TOKEN_ARG: ${{env.JWT_REFRESH_TOKEN}}
+          JWT_LIFETIME_ARG: ${{env.JWT_LIFETIME}}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
