@@ -25,15 +25,6 @@ jobs:
             type=semver,pattern={{major}}
           flavor: |
             latest=auto
-          docker_build_args: |
-            JWT_SECRET_ARG
-            JWT_REFRESH_TOKEN_ARG
-            JWT_LIFETIME_ARG
-        env:
-          JWT_SECRET_ARG: ${{ secrets.JWT_SECRET }}
-          JWT_REFRESH_TOKEN_ARG: ${{ secrets.JWT_REFRESH_TOKEN }}
-          JWT_LIFETIME_ARG: ${{ secrets.JWT_LIFETIME }}
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -46,7 +37,15 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
+          docker_build_args: |
+            JWT_SECRET_ARG
+            JWT_REFRESH_TOKEN_ARG
+            JWT_LIFETIME_ARG
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          env: |
+            JWT_SECRET_ARG: ${{ secrets.JWT_SECRET }}
+            JWT_REFRESH_TOKEN_ARG: ${{ secrets.JWT_REFRESH_TOKEN }}
+            JWT_LIFETIME_ARG: ${{ secrets.JWT_LIFETIME }}
