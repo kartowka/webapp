@@ -38,14 +38,10 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           build-args: |
-            JWT_SECRET_ARG
-            JWT_REFRESH_TOKEN_ARG
-            JWT_LIFETIME_ARG
+            "GITHUB_SECRET_JWT_SECRET=${{secrets.JWT_SECRET}}"
+            "GITHUB_SECRET_JWT_REFRESH_TOKEN=${{secrets.JWT_REFRESH_TOKEN}}"
+            "GITHUB_SECRET_JWT_LIFETIME=${{secrets.JWT_LIFETIME}}"
           context: .
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          env: |
-            JWT_SECRET_ARG: ${{ secrets.JWT_SECRET }}
-            JWT_REFRESH_TOKEN_ARG: ${{ secrets.JWT_REFRESH_TOKEN }}
-            JWT_LIFETIME_ARG: ${{ secrets.JWT_LIFETIME }}
