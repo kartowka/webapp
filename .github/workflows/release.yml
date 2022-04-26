@@ -30,9 +30,9 @@ jobs:
             JWT_REFRESH_TOKEN_ARG
             JWT_LIFETIME_ARG
         env:
-          JWT_SECRET_ARG: ${{env.JWT_SECRET}}
-          JWT_REFRESH_TOKEN_ARG: ${{env.JWT_REFRESH_TOKEN}}
-          JWT_LIFETIME_ARG: ${{env.JWT_LIFETIME}}
+          JWT_SECRET_ARG: ${{ secrets.JWT_SECRET }}
+          JWT_REFRESH_TOKEN_ARG: ${{ secrets.JWT_REFRESH_TOKEN }}
+          JWT_LIFETIME_ARG: ${{ secrets.JWT_LIFETIME }}
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
