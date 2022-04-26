@@ -37,7 +37,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          docker_build_args: |
+          build-args: |
             JWT_SECRET_ARG
             JWT_REFRESH_TOKEN_ARG
             JWT_LIFETIME_ARG
