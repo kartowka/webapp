@@ -13,3 +13,7 @@ dist
 .vscode
 .DS_Store
 utils
+Dockerfile*
+docker-compose*
+README.md
+LICENSE
