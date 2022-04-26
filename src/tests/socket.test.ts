@@ -78,7 +78,6 @@ describe('Socket.IO TEST', () => {
   const createClientSocket = (user: socketUserModel) => {
     return new Promise<void>(resolve => {
       user.clientSocket = Client(`http://localhost:${process.env.PORT}`, {
-        transports: ['websocket'],
         reconnection: true,
         reconnectionDelay: 500,
         reconnectionAttempts: 10,
@@ -107,6 +106,7 @@ describe('Socket.IO TEST', () => {
     await Promise.all([disconnectClientSocket(users[0]), disconnectClientSocket(users[1])])
   })
   it('should test echo event', done => {
+    users[0].clientSocket.emit('common:echo', 'echo message')
     users[0].clientSocket.on('common:echo', (arg: string) => {
       expect(arg).toBe('echo message')
       done()
@@ -114,40 +114,34 @@ describe('Socket.IO TEST', () => {
     users[0].clientSocket.emit('common:echo', 'echo message')
   })
   it('should test ims', done => {
-    const msg = { body: 'this is a test message', receiver: users[1].clientSocket.id }
-    users[1].clientSocket.on('ims:instantMsg', (rcMsg: InstantMessage) => {
+    const msg = { body: 'this is a test message', receiver: users[1]._id }
+    users[0].clientSocket.emit('ims:sendMessage', msg)
+    users[1].clientSocket.on('ims:receiveMessage', (rcMsg: InstantMessage) => {
       expect(rcMsg.body).toBe(msg.body)
-      expect(rcMsg.sender).toBe(users[0].clientSocket.id)
-      expect(rcMsg.receiver).toBe(users[1].clientSocket.id)
+      expect(rcMsg.sender).toBe(users[0]._id)
+      expect(rcMsg.receiver).toBe(users[1]._id)
       done()
     })
-    users[0].clientSocket.emit('ims:instantMsg', msg)
   })
-  // const createPostMessageFromAPI = async (message: string, sender: string, accessToken: string) => {
-  //   return new Promise(resolve => {
-  //     setTimeout(
-  //       resolve(
-  //         request(serverInstance)
-  //           .post('/api/post')
-  //           .set({ Authorization: 'Bearer ' + accessToken })
-  //           .send({ message: message, sender: sender })
-  //       ),
-  //       100
-  //     )
-  //   })
-  // }
+
+  const createPostMessageFromAPI = async (user: socketUserModel, msg: string) => {
+    await request(serverInstance)
+      .post('/api/post')
+      .set({ Authorization: 'Bearer ' + user.accessToken })
+      .send({ message: msg, sender: user.email })
+  }
 
   // //TODO on user post message broadcast to room all and get the message
   it('should test broadcasting message', done => {
+    expect.assertions(2)
+    const msg = { body: 'broadcast message' }
+    Promise.resolve(createPostMessageFromAPI(users[0], msg.body))
     users[1].clientSocket.on('post:new', (receivedMessage: string) => {
-      console.log(receivedMessage)
-      expect(receivedMessage).toBe('msg.message')
+      expect(receivedMessage).toBe(msg.body)
       done()
     })
-
-    users[0].clientSocket.emit('post:new', 'msg.message')
+    users[0].clientSocket.on('post:new', (receivedMessage: string) => {
+      expect(receivedMessage).toBe(msg.body)
+    })
   })
 })
-// expect.assertions(1)
-// const msg = { body: 'broadcast message', id: users[0]._id, accessToken: users[0].accessToken }
-// const response = createPostMessageFromAPI(msg.body, msg.id, msg.accessToken)

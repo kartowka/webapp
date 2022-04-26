@@ -19,7 +19,8 @@ report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 *.rdb
 #lecture folder 
 lectures/
-
+#utils-k8s
+utils/k8s
 # Runtime data
 pids
 *.pid
