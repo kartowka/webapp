@@ -21,6 +21,16 @@ services:
       - '27017:27017'
     networks:
       - webapp-network
+  mongo-express:
+    container_name: mongo-express
+    build:
+      context: utils/mongo-express
+    ports:
+      - '8081:8081'
+    depends_on:
+      - mongo
+    networks:
+      - webapp-network
   redis:
     container_name: redis
     build:
