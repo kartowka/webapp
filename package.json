@@ -55,7 +55,7 @@
     "express-async-errors": "^3.1.1",
     "jest": "^27.5.1",
     "jest-ts-webcompat-resolver": "^1.0.0",
-    "nodemon": "^2.0.15",
+    "nodemon": "^2.0.20",
     "prettier": "^2.6.0",
     "rimraf": "^3.0.2",
     "supertest": "^6.2.2",
